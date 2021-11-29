@@ -1,0 +1,7 @@
+---
+BasedOnStyle: Chromium
+BreakBeforeBraces: Allman
+ColumnLimit: '180'
+IndentWidth: '4'
+NamespaceIndentation: All
+ReflowComments: false
