@@ -6,8 +6,12 @@
 #include <eosio/singleton.hpp>
 #include <string>
 #include <vector>
+
+#include "Schema1.hpp"
+
 namespace contract_name
 {
+    using contract_name::Schema1;
     using eosio::check;
     using eosio::contract;
     using eosio::datastream;
@@ -20,6 +24,9 @@ namespace contract_name
     extern const char* sayhialice_ricardian;
     extern const char* ricardian_clause;
 
+    // The account this contract is normally deployed to
+    inline constexpr auto default_contract_account = "contractacc"_n;
+
     class class1_contract : public contract
     {
        public:
@@ -30,5 +37,23 @@ namespace contract_name
         void sayhi();
 
         void sayhialice(const name& someone);
+
+        using Schema1Table = eosio::multi_index<"schema1"_n, Schema1>;
     };
+
+    // This macro:
+    // * Creates a part of the dispatcher
+    // * Defines action wrappers which make it easy for other contracts and for test cases to invoke
+    //   this contract's actions
+    // * Optional: provides the names of actions to the ABI generator. Without this, the ABI
+    //   generator will make up names (e.g. arg0, arg1, arg2, ...).
+    // * Optional: provides ricardian contracts to the ABI generator. Without this, the ABI generator
+    //   will leave the ricardian contracts blank.
+    EOSIO_ACTIONS(class1_contract,
+                  default_contract_account,
+                  action(sayhi, ricardian_contract(sayhi_ricardian)),
+                  action(sayhialice, someone, ricardian_contract(sayhialice_ricardian)))
+
+    // See https://github.com/eoscommunity/demo-clsdk/ for another example, including how to listen for a token transfer
+
 }  // namespace contract_name

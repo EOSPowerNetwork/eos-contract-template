@@ -1,6 +1,7 @@
 #include <eosio/tester.hpp>
 #include <token/token.hpp>
-#include "_dispatcher.hpp"
+
+#include "class1.hpp"
 
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
@@ -10,8 +11,8 @@ using namespace eosio;
 // Setup function to install my contract to the chain
 void setup_installMyContract(test_chain& t)
 {
-    t.create_code_account(contract_name::contract_account);
-    t.set_code(contract_name::contract_account, "artifacts/contract_name.wasm");
+    t.create_code_account(contract_name::default_contract_account);
+    t.set_code(contract_name::default_contract_account, "artifacts/contract_name.wasm");
 }
 
 // Setup function to add some accounts to the chain
@@ -104,19 +105,3 @@ TEST_CASE("Short description of first test")
     expect(alice.trace<contract_name::actions::sayhialice>("bob"_n), "You may only say hi to Alice!");
 
 }  // First test
-
-TEST_CASE("Short description of second test")
-{
-    // This starts a single-producer chain
-    test_chain t;
-    setup_installMyContract(t);
-    setup_createAccounts(t);
-
-    // some shortcuts
-    auto alice = t.as("alice"_n);
-    auto bob = t.as("bob"_n);
-
-    expect(alice.trace<contract_name::actions::action1>(), nullptr);
-    expect(alice.trace<contract_name::actions::action2>("alice"_n), nullptr);
-    expect(alice.trace<contract_name::actions::action2>("bob"_n), "Missing required authority");
-}

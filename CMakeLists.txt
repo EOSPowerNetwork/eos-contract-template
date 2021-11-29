@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.16)
 # Main variable configurations - Customized with each project
 ## Basic configuration -- Only set the varables in this section
 set(PROJ contract_name)
-list(APPEND FILENAMES "class2" "class1")
+list(APPEND FILENAMES "class1")
 ###################################################################
 
 
@@ -45,8 +45,6 @@ foreach (var ${FILENAMES})
   list(APPEND SOURCELIST ${temp})
 endforeach()
 
-set(DISPATCHERFILE "${SOURCEDIR}_dispatcher.cpp")
-
 # Debug outputs
 # message("Test file: ${TESTNAME}\n")
 # message("Ricardian files: ${RICARDIANLIST}\n")
@@ -73,7 +71,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${ARTIFACTS_DIR})
 #     help expose memory bugs that eosio-contract-simple-malloc hides.
 #     The downsides of eosio-contract-full-malloc are that contracts
 #     will be larger and slower.
-add_executable(${PROJ} ${SOURCELIST} ${DISPATCHERFILE} ${RICARDIANLIST})
+add_executable(${PROJ} ${SOURCELIST} ${RICARDIANLIST})
 target_include_directories(${PROJ} PRIVATE ${INCLUDE_DIRS})
 target_link_libraries(${PROJ} eosio-contract-simple-malloc)
 
@@ -87,7 +85,7 @@ target_link_libraries(${PROJ} eosio-contract-simple-malloc)
 # Create a debugging contract by linking to either
 # eosio-contract-simple-malloc-debug or eosio-contract-full-malloc-debug.
 set(DEBUG_PROJ ${PROJ}-debug)
-add_executable(${DEBUG_PROJ} ${SOURCELIST} ${DISPATCHERFILE} ${RICARDIANLIST})
+add_executable(${DEBUG_PROJ} ${SOURCELIST} ${RICARDIANLIST})
 target_include_directories(${DEBUG_PROJ} PRIVATE ${INCLUDE_DIRS})
 target_link_libraries(${DEBUG_PROJ} eosio-contract-simple-malloc-debug)
 
@@ -96,7 +94,7 @@ target_link_libraries(${DEBUG_PROJ} eosio-contract-simple-malloc-debug)
 #   * Build ${PROJ}.abi.wasm. This must link to eosio-contract-abigen.
 #   * Run the wasm to generate the abi
 set(ABIGEN_PROJ ${PROJ}-abigen)
-add_executable(${ABIGEN_PROJ} ${DISPATCHERFILE} ${RICARDIANLIST})
+add_executable(${ABIGEN_PROJ} ${SOURCELIST} ${RICARDIANLIST})
 target_include_directories(${ABIGEN_PROJ} PRIVATE ${INCLUDE_DIRS})
 target_link_libraries(${ABIGEN_PROJ} eosio-contract-abigen)
 add_custom_command(TARGET ${ABIGEN_PROJ} POST_BUILD
