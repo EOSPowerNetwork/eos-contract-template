@@ -12,12 +12,12 @@
             "args": [
                 "-v",
                 "-s",
-                "contract_name.wasm",
-                "contract_name-debug.wasm",
+                "artifacts/contract_name.wasm",
+                "artifacts/contract_name-debug.wasm",
                 "-s",
                 "clsdk/contracts/token.wasm",
                 "clsdk/contracts/token-debug.wasm",
-                "test-contract_name.wasm"
+                "artifacts/test-contract_name.wasm"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/build",
