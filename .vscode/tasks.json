@@ -1,5 +1,13 @@
 {
     "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "testsuite",
+            "type": "promptString",
+            "default": "[mytestsuite]",
+            "description": "Enter test suite key (Example: \"[MyTestSuite]\""
+        }
+    ],
     "tasks": [
       // Compilation
       {
@@ -46,6 +54,22 @@
                 "tooltip": "Invoke Cltester"
             }
         }
+      },
+      {
+          "label": "testspecific",
+          "type": "shell",
+          "command": "cd build && cltester -v artifacts/test-contract_name.wasm ${input:testsuite} -s ",
+          "args": [],
+          "group": {
+              "kind": "build",
+              "isDefault": true
+          },
+          "options": {
+              "statusbar": {
+                  "label": "$(diff-insert) Test Suite",
+                  "tooltip": "Invoke Cltester on a specific test suite"
+              }
+          }
       }
     ]
   }
