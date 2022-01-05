@@ -101,9 +101,10 @@
         "cinttypes": "cpp"
     },
     "clang-tidy.buildPath": "build",
-    "clang-tidy.compilerArgsBefore":
-    [
+    "clang-tidy.compilerArgsBefore": [
         "-Wall",
         "-Wextra"
-    ]
+    ],
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "xaver.clang-format"
 }
